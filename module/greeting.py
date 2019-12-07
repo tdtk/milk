@@ -2,13 +2,18 @@ from linebot import (
   LineBotApi
 )
 
+from linebot.models import (
+  MessageEvent
+)
+
+from module.util import (
+  get_profile
+)
+
 def is_greeting(text: str):
   return text in ['こんにちは', 'おはよう', 'おやすみ', 'はじめまして']
 
-def greeting(text: str, user_id: str, group_id, api: LineBotApi):
-  if group_id:
-    user_profile = api.get_group_member_profile(group_id, user_id)
-  else:
-    user_profile = api.get_profile(user_id)
-  return f'{user_profile.display_name}さん! {text}😊'
+def greeting(text: str, event: MessageEvent, api: LineBotApi):
+  profile = get_profile(event, api)
+  return f'{profile.display_name}さん! {text}😊'
 

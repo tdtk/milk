@@ -12,6 +12,7 @@ from linebot.models import (
 )
 
 from module.greeting import is_greeting, greeting
+from module.money import pay
 
 app = Flask(__name__)
 
@@ -42,10 +43,13 @@ def callback():
 def handle_message(event):
   text = event.message.text
   if is_greeting(text):
-    text = greeting(text, event.source.user_id, event.source.group_id, line_bot_api)
-  line_bot_api.reply_message(
-    event.reply_token,
-    TextSendMessage(text=text))
+    text = greeting(text, event, line_bot_api)
+  if text.startswith('みるく'):
+    line_bot_api.reply_message( event.reply_token, TextSendMessage(text=text))
+    return
+  if text.startswith('支払い'):
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))
+    return
 
 
 if __name__ == "__main__":
