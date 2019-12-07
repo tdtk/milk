@@ -44,6 +44,8 @@ def handle_message(event):
   text = event.message.text
   if is_greeting(text):
     text = greeting(text, event, line_bot_api)
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=text))
+    return 
   if text.startswith('みるく'):
     line_bot_api.reply_message( event.reply_token, TextSendMessage(text=text[4:]))
     return
