@@ -11,8 +11,8 @@ from module.util import (
 )
 
 def pay(args: list, event: MessageEvent, api: LineBotApi):
-  if args.len() != 3:
-    raise Exception(f'Number of args must be 3, not {args.len()}')
+  if len(args) != 3:
+    raise Exception(f'Number of args must be 3, not {len(args)}')
   profile = get_profile(event, api)
   return f'{profile.display_name}さんの{args[1]}の代金{args[2]}円を登録しました!'
 
