@@ -45,7 +45,7 @@ def handle_message(event):
   if is_greeting(text):
     text = greeting(text, event, line_bot_api)
   if text.startswith('みるく'):
-    line_bot_api.reply_message( event.reply_token, TextSendMessage(text=text))
+    line_bot_api.reply_message( event.reply_token, TextSendMessage(text=text[4:]))
     return
   if text.startswith('支払い'):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))
