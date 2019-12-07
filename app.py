@@ -11,7 +11,7 @@ from linebot.models import (
   MessageEvent, TextMessage, TextSendMessage,
 )
 
-from greeting import is_greeting, greeting
+from module.greeting import is_greeting, greeting
 
 app = Flask(__name__)
 
