@@ -42,7 +42,7 @@ def callback():
 def handle_message(event):
   text = event.message.text
   if is_greeting(text):
-    text = greeting(text)
+    text = greeting(text, event.source.user_id, line_bot_api)
   line_bot_api.reply_message(
     event.reply_token,
     TextSendMessage(text=text))
