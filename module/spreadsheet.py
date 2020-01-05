@@ -2,6 +2,7 @@ from __future__ import print_function
 import pickle
 import os.path
 import os
+import json
 import datetime
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -27,7 +28,6 @@ def get_credentials():
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
     else:
-      CREDS = client.Credentials.new_from_json(CONTENTS)
       flow = InstalledAppFlow.from_client_config(json.loads(os.environ['SPREADSHEET_CREDENTIALS']), scopes=SCOPES)
       creds = flow.run_local_server(port=0)
   # Save the credentials for the next run
