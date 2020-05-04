@@ -15,6 +15,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
+
 def get_credentials():
   creds = None
   # The file token.pickle stores the user's access and refresh tokens, and is
@@ -40,9 +41,9 @@ def record_money(usr_name: str, item_name: str, item_cost: int):
   service = build('sheet', 'v4', credentials=get_credentials())
   spreadsheet_id = os.environ['MILK_SPREADSHEET_ID']
   value_range_body = {
-    "range": "A2:D2",
-    "majorDimension": "ROWS",
-    "values": [[datetime.date.today(), usr_name, item_name, item_cost]]
+      "range": "A2:D2",
+      "majorDimension": "ROWS",
+      "values": [[datetime.date.today(), usr_name, item_name, item_cost]]
   }
   request = service.spreadsheets().values().update(spreadsheetId=spreadsheet_id, range=value_range_body['range'], body=value_range_body)
   response = request.execute()

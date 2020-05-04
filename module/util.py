@@ -1,11 +1,12 @@
 
 from linebot import (
-  LineBotApi
+    LineBotApi
 )
 
 from linebot.models import (
-  MessageEvent
+    MessageEvent
 )
+
 
 def get_profile(event: MessageEvent, api: LineBotApi):
   source = event.source
