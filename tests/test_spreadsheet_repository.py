@@ -15,8 +15,8 @@ class TestSpreadsheetRepository(unittest.TestCase):
 
   def test_get(self):
     range_ = Range(1, 1, 1, 1, sheet="test")
-    expect = ValueRange("test!A1", Dimension.ROWS, values=[["1"]])
+    expect = ValueRange(Range.init_from_str("test!A1"), Dimension.ROWS, values=[["1"]])
     actual = self.repository.get(range_=range_, major_dimension=Dimension.ROWS)
     self.assertEqual(expect.values, actual.values)
-    self.assertEqual(expect.range, actual.range)
+    self.assertEqual(str(expect.range), str(actual.range))
     self.assertEqual(expect.major_dimension, actual.major_dimension)

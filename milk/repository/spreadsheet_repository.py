@@ -57,4 +57,4 @@ class SpreadsheetRepository():
         dateTimeRenderOption=date_time_render_option.value
     )
     response = request.execute()
-    return ValueRange(response["range"], Dimension[response["majorDimension"]], response["values"])
+    return ValueRange(Range.init_from_str(response["range"]), Dimension[response["majorDimension"]], response["values"])
