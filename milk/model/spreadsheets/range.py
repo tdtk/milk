@@ -18,4 +18,4 @@ class Range:
     return res
 
   def __str__(self):
-    return f"{ sheet + '!' if sheet else ''}"
+    return f"{ sheet + '!' if sheet else ''}{self.trancelate_row(startRow)}{startColumn}:{self.trancelate_row(endRow)}{endColumn}"
