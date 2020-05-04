@@ -2,17 +2,17 @@ import os
 from flask import Flask, request, abort
 
 from linebot import (
-  LineBotApi, WebhookHandler
+    LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
-  InvalidSignatureError
+    InvalidSignatureError
 )
 from linebot.models import (
-  MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage,
 )
 
-from module.greeting import is_greeting, greeting
-from module.money import pay
+from milk.module.greeting import is_greeting, greeting
+from milkmodule.money import pay
 
 app = Flask(__name__)
 
@@ -45,9 +45,9 @@ def handle_message(event):
   if is_greeting(text):
     text = greeting(text, event, line_bot_api)
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=text))
-    return 
+    return
   if text.startswith('みるく'):
-    line_bot_api.reply_message( event.reply_token, TextSendMessage(text=text[4:]))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=text[4:]))
     return
   if text.startswith('支払い'):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))

@@ -11,7 +11,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 class SpreadsheetRepository():
 
-  def _init_(self, credentials, spreadsheet_id):
+  def __init__(self, credentials, spreadsheet_id):
     self.credentials = credentials
     self.spreadsheet_id = spreadsheet_id
     return self
@@ -36,3 +36,6 @@ class SpreadsheetRepository():
     with open('token.pickle', 'wb') as token:
       pickle.dump(creds, token)
     return creds
+
+  def get(self):
+    pass
