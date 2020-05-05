@@ -1,0 +1,7 @@
+from enum import Enum
+
+
+class ValueInputOption(Enum):
+  INPUT_VALUE_OPTION_UNSPECIFIED = "INPUT_VALUE_OPTION_UNSPECIFIED"
+  RAW = "RAW"
+  USER_ENTERED = "USER_ENTERD"

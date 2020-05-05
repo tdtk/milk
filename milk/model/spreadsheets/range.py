@@ -2,7 +2,7 @@ from milk.util.range_regex import get_range_regex
 
 
 class Range:
-  def __init__(self, startRow: int, endRow: int, startColumn: int, endColumn: int, sheet=None):
+  def __init__(self, startRow: int, startColumn: int, endRow: int, endColumn: int, sheet=None):
     if (startRow == 0 or endRow == 0 or startColumn == 0 or endColumn == 0):
       raise Exception("Range of spreadsheets starts from 1")
     self.startRow = startRow

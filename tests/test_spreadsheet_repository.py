@@ -4,6 +4,7 @@ from milk.repository.spreadsheet_repository import SpreadsheetRepository
 from milk.model.spreadsheets.range import Range
 from milk.model.spreadsheets.dimension import Dimension
 from milk.model.spreadsheets.value_range import ValueRange
+from milk.model.spreadsheets.value_input_option import ValueInputOption
 from milk.util.dotenv import load
 
 
@@ -20,3 +21,9 @@ class TestSpreadsheetRepository(unittest.TestCase):
     self.assertEqual(expect.values, actual.values)
     self.assertEqual(str(expect.range), str(actual.range))
     self.assertEqual(expect.major_dimension, actual.major_dimension)
+
+  def test_append(self):
+    range_ = Range(1, 1, 2, 1, sheet="test")
+    body = ValueRange(range_, Dimension.ROWS, values=[["2"]])
+    response = self.repository.append(range_, body, ValueInputOption.RAW, include_values_in_response=True)
+    self.assertEqual(body.values, response.updates.updated_data.values)
