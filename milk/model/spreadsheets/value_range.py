@@ -7,3 +7,6 @@ class ValueRange():
     self.range = range_
     self.major_dimension = major_dimension
     self.values = values
+
+  def get_str_values(self):
+    return list(map(lambda ee: list(map(lambda e: str(e), ee)), self.values))

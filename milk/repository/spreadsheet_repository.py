@@ -110,3 +110,44 @@ class SpreadsheetRepository():
             updated_data=updated_data
         )
     )
+
+  def update(
+      self,
+      range_: Range,
+      body: ValueRange,
+      value_input_option: ValueInputOption,
+      include_values_in_response=False,
+      response_value_render_option=ValueRenderOption.FORMATTED_VALUE,
+      response_date_time_render_option=DateTimeRenderOption.SERIAL_NUMBER
+  ) -> UpdateValuesResponse:
+    service = build('sheets', 'v4', credentials=self.get_credentials())
+    request = service.spreadsheets().values().update(
+        spreadsheetId=self.spreadsheet_id,
+        range=str(range_),
+        body={
+            "range": str(body.range),
+            "majorDimension": body.major_dimension.value,
+            "values": body.values
+        },
+        valueInputOption=value_input_option.value,
+        includeValuesInResponse=include_values_in_response,
+        responseValueRenderOption=response_value_render_option.value,
+        responseDateTimeRenderOption=response_date_time_render_option.value
+    )
+    response = request.execute()
+    updated_data = None
+    if ("updatedData" in response):
+      updated_data = response["updatedData"]
+      updated_data = ValueRange(
+          range_=updated_data["range"],
+          major_dimension=updated_data["majorDimension"],
+          values=updated_data["values"]
+      )
+    return UpdateValuesResponse(
+        spreadsheet_id=response["spreadsheetId"],
+        updated_range=response["updatedRange"],
+        updated_rows=response["updatedRows"],
+        updated_columns=response["updatedColumns"],
+        updated_cells=response["updatedCells"],
+        updated_data=updated_data
+    )
