@@ -14,6 +14,7 @@ from milk.model.spreadsheets.value_input_option import ValueInputOption
 from milk.model.spreadsheets.insert_data_option import InsertDataOption
 from milk.model.spreadsheets.append_response import AppendResponse
 from milk.model.spreadsheets.update_values_response import UpdateValuesResponse
+from milk.model.spreadsheets.clear_response import ClearResponse
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -100,7 +101,7 @@ class SpreadsheetRepository():
       )
     return AppendResponse(
         spreadsheet_id=response["spreadsheetId"],
-        table_range=response["tableRange"],
+        table_range=response.get("tableRange"),
         updates=UpdateValuesResponse(
             spreadsheet_id=updates["spreadsheetId"],
             updated_range=updates["updatedRange"],
@@ -150,4 +151,20 @@ class SpreadsheetRepository():
         updated_columns=response["updatedColumns"],
         updated_cells=response["updatedCells"],
         updated_data=updated_data
+    )
+
+  def clear(
+      self,
+      range_: Range
+  ) -> ClearResponse:
+    service = build('sheets', 'v4', credentials=self.get_credentials())
+    request = service.spreadsheets().values().clear(
+        spreadsheetId=self.spreadsheet_id,
+        range=str(range_)
+    )
+    response = request.execute()
+    print(response)
+    return ClearResponse(
+        spreadsheet_id=response["spreadsheetId"],
+        cleared_range=response["clearedRange"]
     )

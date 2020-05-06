@@ -23,10 +23,11 @@ class TestSpreadsheetRepository(unittest.TestCase):
     self.assertEqual(expect.major_dimension, actual.major_dimension)
 
   def test_append(self):
-    range_ = Range(1, 1, 2, 1, sheet="test")
+    range_ = Range(1, 3, 1, 3, sheet="test")
     body = ValueRange(range_, Dimension.ROWS, values=[[2]])
     response = self.repository.append(range_, body, ValueInputOption.RAW, include_values_in_response=True)
     self.assertEqual(body.get_str_values(), response.updates.updated_data.values)
+    self.repository.clear(range_)
 
   def test_update(self):
     range_ = Range(1, 2, 1, 2, sheet="test")
