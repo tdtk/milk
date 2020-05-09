@@ -59,5 +59,5 @@ def get_total(args: list):
         res += f"{buyer_list[0]}さんが{buyer_list[1]}さんに{buyer2cost[buyer_list[1]] - buyer2cost[buyer_list[0]]}円支払いましょう!"
     return res
 
-  except:
-    return "データの取得に失敗しました。"
+  except Exception as e:
+    return "データの取得に失敗しました。\n 詳細: {e}"
