@@ -34,7 +34,7 @@ def pay(args: list, event: MessageEvent, api: LineBotApi):
 
 
 def get_total(args: list):
-  if len(args) == 2 or len(args) == 3:
+  if not(len(args) == 2 or len(args) == 3):
     raise Exception(f'Number of args must be 2 or 3, not {len(args)}')
   service = SpreadsheetService()
   month = int(args[1])
