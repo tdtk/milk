@@ -53,7 +53,7 @@ def handle_message(event):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))
     return
   if text.startswith("合計"):
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=get_total(text.split(), event, line_bot_api)))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=get_total(text.split())))
     return
 
 
