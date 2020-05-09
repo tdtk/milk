@@ -12,7 +12,7 @@ from linebot.models import (
 )
 
 from milk.module.greeting import is_greeting, greeting
-from milk.module.purchase import pay
+from milk.module.purchase import pay, get_total
 
 app = Flask(__name__)
 
@@ -51,6 +51,9 @@ def handle_message(event):
     return
   if text.startswith('支払い'):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))
+    return
+  if text.startswith("合計"):
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=get_total(text.split(), event, line_bot_api)))
     return
 
 
