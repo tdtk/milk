@@ -6,7 +6,7 @@ from linebot.models import (
     MessageEvent
 )
 
-from module.util import (
+from milk.module.util import (
     get_profile
 )
 
