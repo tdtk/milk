@@ -20,7 +20,7 @@ def pay(args: list, event: MessageEvent, api: LineBotApi):
   service = SpreadsheetService()
   buyer = profile.display_name
   item = args[1]
-  cost = args[2]
+  cost = int(args[2])
   try:
     service.append_purchase_data(buyer=buyer, item=item, cost=cost)
   except:
