@@ -60,4 +60,4 @@ def get_total(args: list):
     return res
 
   except Exception as e:
-    return "データの取得に失敗しました。\n 詳細: {e}"
+    return f"データの取得に失敗しました。\n 詳細: {e}"
