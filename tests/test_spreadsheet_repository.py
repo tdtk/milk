@@ -34,3 +34,8 @@ class TestSpreadsheetRepository(unittest.TestCase):
     body = ValueRange(range_, Dimension.ROWS, values=[[3]])
     response = self.repository.update(range_, body, ValueInputOption.RAW, include_values_in_response=True)
     self.assertEqual(body.get_str_values(), response.updated_data.values)
+
+  def test_add_sheet(self):
+    pass
+    # response = self.repository.add_sheet("hoge")
+    # print(response)

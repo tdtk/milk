@@ -163,8 +163,24 @@ class SpreadsheetRepository():
         range=str(range_)
     )
     response = request.execute()
-    print(response)
     return ClearResponse(
         spreadsheet_id=response["spreadsheetId"],
         cleared_range=response["clearedRange"]
     )
+
+  def add_sheet(self, title: str):
+    service = build('sheets', 'v4', credentials=self.get_credentials())
+    request = service.spreadsheets().batchUpdate(spreadsheetId=self.spreadsheet_id, body={
+        "requests": [
+            {"addSheet": {
+                "properties": {
+                    "title": title
+                }
+            }}
+        ],
+        "includeSpreadsheetInResponse": False,
+        "responseRanges": [],
+        "responseIncludeGridData": False
+    })
+    response = request.execute()
+    return response["replies"]
