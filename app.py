@@ -12,7 +12,7 @@ from linebot.models import (
 )
 
 from milk.module.greeting import is_greeting, greeting
-from milkmodule.money import pay
+from milk.module.purchase import pay
 
 app = Flask(__name__)
 
