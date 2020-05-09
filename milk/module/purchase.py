@@ -48,10 +48,10 @@ def get_total(args: list):
       if d.buyer in buyer2cost:
         buyer2cost[d.buyer] += d.cost
       else:
-        buyer2cost[d.buyer] = 0
+        buyer2cost[d.buyer] = d.cost
     for k, v in buyer2cost.items():
       buyer_list.append(k)
-      res += f"{k}さんは{v}円の支払っています!\n"
+      res += f"{k}さんは{v}円支払っています!\n"
     if len(buyer_list) == 2:
       if buyer2cost[buyer_list[0]] > buyer2cost[buyer_list[1]]:
         res += f"{buyer_list[1]}さんが{buyer_list[0]}さんに{buyer2cost[buyer_list[0]] - buyer2cost[buyer_list[1]]}円支払いましょう!"
