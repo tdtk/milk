@@ -75,7 +75,7 @@ def get_total_until_date(date: datetime.date):
     buyer_list = []
     res = ""
     for d in data:
-      if date > datetime.fromisoformat(d.date):
+      if date > datetime.date.fromisoformat(d.date):
         if d.buyer in buyer2cost:
           buyer2cost[d.buyer] += int(d.cost)
         else:
