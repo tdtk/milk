@@ -8,7 +8,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, PostbackAction, ButtonsTemplate, PostbackEvent
+    MessageEvent, TextMessage, TextSendMessage, PostbackAction, PostbackEvent, TemplateSendMessage, ButtonsTemplate
 )
 
 from milk.module.greeting import is_greeting, greeting
@@ -59,19 +59,22 @@ def handle_message(event):
   if text.startswith("ミス") or text.startswith("みす"):
     try:
       res = get_latest_data()
-      line_bot_api.reply_message(event.reply_token, ButtonsTemplate(
-          text=res["message"],
-          title="最新の購入履歴を削除",
-          actions=[
-              PostbackAction(
-                label="はい",
-                data=f"action=clear&sheet={res['sheet']}&index={res['index']}"
-              ),
-              PostbackAction(
-                  label="いいえ",
-                  data="action=cancel"
-              )
-          ]
+      line_bot_api.reply_message(event.reply_token, TemplateSendMessage(
+          alt_text="This is confirmation of clear latest purchase data",
+          template=ButtonsTemplate(
+              text=res["message"],
+              title="最新の購入履歴を削除",
+              actions=[
+                  PostbackAction(
+                    label="はい",
+                    data=f"action=clear&sheet={res['sheet']}&index={res['index']}"
+                  ),
+                  PostbackAction(
+                      label="いいえ",
+                      data="action=cancel"
+                  )
+              ]
+          )
       ))
     except Exception as e:
       line_bot_api.reply_message(event.reply_token, TextSendMessage(text=e))
