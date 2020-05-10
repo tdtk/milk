@@ -13,7 +13,7 @@ from linebot.models import (
 )
 
 from milk.module.greeting import is_greeting, greeting
-from milk.module.purchase import pay, get_total, get_latest_data, clear_purchase_data, get_total_until_date
+from milk.module.purchase import pay, get_total, get_latest_data, clear_purchase_data, get_total_until_date, get_sheet_url
 from milk.util.handle_action import action_data2dict
 from milk.module.rich_menu import milk_rich_menu
 
@@ -58,6 +58,8 @@ def handle_message(event):
   if text.startswith('みるく'):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=text[4:]))
     return
+  if text.startswith('シート') or text.startswith('しーと'):
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=get_sheet_url()))
   if text.startswith('支払い'):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))
     return

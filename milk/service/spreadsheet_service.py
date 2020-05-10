@@ -38,3 +38,6 @@ class SpreadsheetService:
   def clear(self, sheet: str, column: int):
     range_ = Range(1, column, 4, column, sheet=sheet)
     self.repository.clear(range_)
+
+  def get_sheet_url(self):
+    return f"https://docs.google.com/spreadsheets/d/{os.environ['MILK_SPREADSHEET_ID']}/"

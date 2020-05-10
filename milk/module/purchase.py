@@ -115,3 +115,8 @@ def clear_purchase_data(sheet: str, index: int):
     return "削除に成功しました!"
   except:
     return "削除が失敗しました(泣)"
+
+
+def get_sheet_url():
+  service = SpreadsheetService()
+  return service.get_sheet_url()
