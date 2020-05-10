@@ -64,8 +64,6 @@ def get_total(args: list):
 
 
 def get_total_until_date(date: datetime.date):
-  if not(len(args) == 2 or len(args) == 3):
-    raise Exception(f'Number of args must be 2 or 3, not {len(args)}')
   service = SpreadsheetService()
   month = date.month
   year = date.year
