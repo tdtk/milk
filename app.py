@@ -96,7 +96,7 @@ def handle_postback(event):
   if data["action"] == "clear":
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=clear_purchase_data(data["sheet"], int(data["index"]))))
   if data["action"] == "calc_month":
-    line_bot_api.reply_message(event.reply_token, TemplateSendMessage(
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(
         text=get_total_until_date(datetime.date.fromisoformat(event.postback.params["date"]))))
 
 
