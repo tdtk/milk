@@ -82,7 +82,7 @@ def handle_message(event):
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
-  data = action_data2dict(event.data)
+  data = action_data2dict(event.postback.data)
   if data["action"] == "cancel":
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text="キャンセルしました!"))
   if data["action"] == "clear":
