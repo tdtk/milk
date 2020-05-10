@@ -40,4 +40,4 @@ class SpreadsheetService:
     self.repository.clear(range_)
 
   def get_sheet_url(self):
-    return f"https://docs.google.com/spreadsheets/d/{os.environ['MILK_SPREADSHEET_ID']}/"
+    return f"https://docs.google.com/spreadsheets/d/{os.environ['MILK_SPREADSHEET_ID']}/edit?usp=sharing"
