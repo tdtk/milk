@@ -57,6 +57,8 @@ def get_total(args: list):
         res += f"{buyer_list[1]}さんが{buyer_list[0]}さんに{buyer2cost[buyer_list[0]] - buyer2cost[buyer_list[1]]}円支払いましょう!"
       else:
         res += f"{buyer_list[0]}さんが{buyer_list[1]}さんに{buyer2cost[buyer_list[1]] - buyer2cost[buyer_list[0]]}円支払いましょう!"
+    if res == "":
+      res = "購入履歴がありません"
     return res
 
   except Exception as e:
@@ -86,6 +88,8 @@ def get_total_until_date(date: datetime.date):
         res += f"{buyer_list[1]}さんが{buyer_list[0]}さんに{buyer2cost[buyer_list[0]] - buyer2cost[buyer_list[1]]}円支払いましょう!"
       else:
         res += f"{buyer_list[0]}さんが{buyer_list[1]}さんに{buyer2cost[buyer_list[1]] - buyer2cost[buyer_list[0]]}円支払いましょう!"
+    if res == "":
+      res = "購入履歴がありません"
     return res
 
   except Exception as e:
