@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, abort
+import datetime
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -12,13 +13,20 @@ from linebot.models import (
 )
 
 from milk.module.greeting import is_greeting, greeting
-from milk.module.purchase import pay, get_total, get_latest_data, clear_purchase_data
+from milk.module.purchase import pay, get_total, get_latest_data, clear_purchase_data, get_total_until_date
 from milk.util.handle_action import action_data2dict
+from milk.module.rich_menu import milk_rich_menu
 
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
+
+rich_menu_id = line_bot_api.create_rich_menu(rich_menu=milk_rich_menu)
+
+with open("./image/milk-rich-menu.png", "rb") as f:
+  line_bot_api.set_rich_menu_image(rich_menu_id, "image/png", f)
+  line_bot_api.set_default_rich_menu(rich_menu_id)
 
 
 @app.route("/callback", methods=['POST'])
@@ -53,7 +61,7 @@ def handle_message(event):
   if text.startswith('支払い'):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=pay(text.split(), event, line_bot_api)))
     return
-  if text.startswith("合計"):
+  if text.startswith("決算"):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=get_total(text.split())))
     return
   if text.startswith("ミス") or text.startswith("みす"):
@@ -87,6 +95,8 @@ def handle_postback(event):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text="キャンセルしました!"))
   if data["action"] == "clear":
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=clear_purchase_data(data["sheet"], int(data["index"]))))
+  if data["action"] == "calc_month":
+    line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text=get_total_until_date(datetime.date.fromisoformat(event.params.datetime))))
 
 
 if __name__ == "__main__":

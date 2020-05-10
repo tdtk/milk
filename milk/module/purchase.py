@@ -63,6 +63,37 @@ def get_total(args: list):
     return f"データの取得に失敗しました。\n 詳細: {e}"
 
 
+def get_total_until_date(date: datetime.date):
+  if not(len(args) == 2 or len(args) == 3):
+    raise Exception(f'Number of args must be 2 or 3, not {len(args)}')
+  service = SpreadsheetService()
+  month = date.month
+  year = date.year
+  try:
+    data = service.get_all_purchase_data(f"{year}/{month}")
+    buyer2cost = {}
+    buyer_list = []
+    res = ""
+    for d in data:
+      if date > datetime.date.fromisoformat(d.date):
+        if d.buyer in buyer2cost:
+          buyer2cost[d.buyer] += int(d.cost)
+        else:
+          buyer2cost[d.buyer] = int(d.cost)
+    for k, v in buyer2cost.items():
+      buyer_list.append(k)
+      res += f"{k}さんは{v}円支払っています!\n"
+    if len(buyer_list) == 2:
+      if buyer2cost[buyer_list[0]] > buyer2cost[buyer_list[1]]:
+        res += f"{buyer_list[1]}さんが{buyer_list[0]}さんに{buyer2cost[buyer_list[0]] - buyer2cost[buyer_list[1]]}円支払いましょう!"
+      else:
+        res += f"{buyer_list[0]}さんが{buyer_list[1]}さんに{buyer2cost[buyer_list[1]] - buyer2cost[buyer_list[0]]}円支払いましょう!"
+    return res
+
+  except Exception as e:
+    return f"データの取得に失敗しました。\n 詳細: {e}"
+
+
 def get_latest_data():
   service = SpreadsheetService()
   today = datetime.date.today()
