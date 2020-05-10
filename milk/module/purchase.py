@@ -78,7 +78,7 @@ def get_latest_data():
 def clear_purchase_data(sheet: str, index: int):
   service = SpreadsheetService()
   try:
-    service.clear(sheet=sheet, column=index + 1)
+    service.clear(sheet=sheet, column=index + 2)
     return "削除に成功しました!"
   except:
     return "削除が失敗しました(泣)"
