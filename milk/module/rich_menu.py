@@ -9,7 +9,7 @@ milk_rich_menu = RichMenu(
     areas=[
         RichMenuArea(
             bounds=RichMenuBounds(x=0, y=0, width=1617, height=843),
-            action=DatetimePickerAction(data="action=calc_month", mode="date", initial=datetime.date.today())
+            action=DatetimePickerAction(data="action=calc_month", mode="date", initial=str(datetime.date.today()))
         ),
         RichMenuArea(
             bounds=RichMenuBounds(x=1617, y=0, width=2500 - 1617, height=843),
