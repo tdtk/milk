@@ -35,6 +35,6 @@ class SpreadsheetService:
     v_range = self.repository.get(range_=range_, major_dimension=Dimension.ROWS)
     return list(map(lambda l: PurchaseData.init_from_list(l), v_range.values))
 
-  def clear(self, column: int):
-    range_ = Range(1, column, 4, column)
+  def clear(self, sheet: str, column: int):
+    range_ = Range(1, column, 4, column, sheet=sheet)
     self.repository.clear(range_)

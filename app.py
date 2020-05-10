@@ -8,11 +8,12 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, PostbackAction, ButtonsTemplate, PostbackEvent
 )
 
 from milk.module.greeting import is_greeting, greeting
-from milk.module.purchase import pay, get_total
+from milk.module.purchase import pay, get_total, get_latest_data, clear_purchase_data
+from milk.util.handle_action import action_data2dict
 
 app = Flask(__name__)
 
@@ -55,6 +56,34 @@ def handle_message(event):
   if text.startswith("合計"):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=get_total(text.split())))
     return
+  if text.startswith("ミス") or text.startswith("みす"):
+    try:
+      res = get_latest_data()
+      line_bot_api.reply_message(event.reply_token, ButtonsTemplate(
+          text=res["message"],
+          title="最新の購入履歴を削除",
+          actions=[
+              PostbackAction(
+                label="はい",
+                data=f"action=clear&sheet={res['sheet']}&index={res['index']}"
+              ),
+              PostbackAction(
+                  label="いいえ",
+                  data="action=cancel"
+              )
+          ]
+      ))
+    except Exception as e:
+      line_bot_api.reply_message(event.reply_token, TextSendMessage(text=e))
+
+
+@handler.add(PostbackEvent)
+def handle_postback(event):
+  data = action_data2dict(event.data)
+  if data["action"] == "cancel":
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text="キャンセルしました!"))
+  if data["action"] == "clear":
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=clear_purchase_data(data["sheet"], int(data["index"]))))
 
 
 if __name__ == "__main__":

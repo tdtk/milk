@@ -61,3 +61,24 @@ def get_total(args: list):
 
   except Exception as e:
     return f"データの取得に失敗しました。\n 詳細: {e}"
+
+
+def get_latest_data():
+  service = SpreadsheetService()
+  today = datetime.date.today()
+  try:
+    data = service.get_all_purchase_data(f"{today.year}/{today.month}")
+    latest_index = len(data) - 1
+    latest = data[latest_index]
+    return {"message": f"{latest.date}の{latest.item}のお支払い{latest.cost}円を削除しますか?", "sheet": f"{today.year}/{today.month}", "index": latest_index}
+  except:
+    raise Exception(f"{today.year}年{today.month}月のお支払いはまだ登録されておりません")
+
+
+def clear_purchase_data(sheet: str, index: int):
+  service = SpreadsheetService()
+  try:
+    service.clear(sheet=sheet, column=index + 1)
+    return "削除に成功しました!"
+  except:
+    return "削除が失敗しました(泣)"
